@@ -5,6 +5,10 @@
  */
 package CapaGUI;
 
+import CapaDTO.Vehiculo;
+import CapaNegocio.Controlador;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author manue
@@ -31,12 +35,17 @@ public class Vista_Entrada extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtPatente = new javax.swing.JTextField();
         jFormattedTextField1 = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jButton1.setText("Guardar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Menu");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -61,7 +70,7 @@ public class Vista_Entrada extends javax.swing.JFrame {
                             .addComponent(jLabel1)
                             .addComponent(jLabel2)
                             .addComponent(jButton1)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                            .addComponent(txtPatente, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
                             .addComponent(jFormattedTextField1)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(147, 147, 147)
@@ -74,7 +83,7 @@ public class Vista_Entrada extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtPatente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(4, 4, 4)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -88,7 +97,7 @@ public class Vista_Entrada extends javax.swing.JFrame {
 
         jButton1.getAccessibleContext().setAccessibleName("btnGuardar");
         jButton2.getAccessibleContext().setAccessibleName("btnMenu");
-        jTextField1.getAccessibleContext().setAccessibleName("txtPatenteIngreso");
+        txtPatente.getAccessibleContext().setAccessibleName("txtPatenteIngreso");
         jFormattedTextField1.getAccessibleContext().setAccessibleName("jfHoraEntrada");
 
         pack();
@@ -100,9 +109,24 @@ public class Vista_Entrada extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Controlador c = new Controlador();
+        String patente = this.txtPatente.getText();
+        Vehiculo v = new Vehiculo(0, patente, "15:15", "15:30", 29990);
+        if(c.AgregarVehiculo(v))
+            {
+                JOptionPane.showMessageDialog(this, "Paciente registrado correctamente", 
+                        "Mensajes", JOptionPane.INFORMATION_MESSAGE);
+                
+            }
+        
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
+    
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -111,6 +135,6 @@ public class Vista_Entrada extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField txtPatente;
     // End of variables declaration//GEN-END:variables
 }
