@@ -28,6 +28,14 @@ public class Vehiculo {
         this.Monto_Total = Monto_Total;
     }
 
+    public Vehiculo(String Hora_Salida, String Patente) {
+        this.Hora_Salida = Hora_Salida;
+        this.Patente = Patente;
+        
+    }
+    
+    
+
     public void setID_Vehiculo(int ID_Vehiculo) {
         this.ID_Vehiculo = ID_Vehiculo;
     }

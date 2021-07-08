@@ -5,6 +5,13 @@
  */
 package CapaGUI;
 
+import CapaDTO.Vehiculo;
+import CapaNegocio.Controlador;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author manue
@@ -29,11 +36,12 @@ public class Vista_Salida extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtPatenteSalida = new javax.swing.JTextField();
         jFormattedTextField1 = new javax.swing.JFormattedTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jTextField2 = new javax.swing.JTextField();
+        btnCalcular = new javax.swing.JButton();
+        btnMenu = new javax.swing.JButton();
+        txtMontoTotal = new javax.swing.JTextField();
+        btnUpdate = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -41,12 +49,24 @@ public class Vista_Salida extends javax.swing.JFrame {
 
         jLabel2.setText("Hora Salida");
 
-        jButton1.setText("Calcular");
-
-        jButton2.setText("Menu");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnCalcular.setText("Calcular");
+        btnCalcular.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnCalcularActionPerformed(evt);
+            }
+        });
+
+        btnMenu.setText("Menu");
+        btnMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMenuActionPerformed(evt);
+            }
+        });
+
+        btnUpdate.setText("Update");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
             }
         });
 
@@ -57,21 +77,25 @@ public class Vista_Salida extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jButton1)
+                        .addComponent(btnCalcular)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-                                    .addComponent(jFormattedTextField1)))
-                            .addGroup(layout.createSequentialGroup()
                                 .addGap(147, 147, 147)
-                                .addComponent(jButton2))))
+                                .addComponent(btnMenu))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(10, 10, 10)
+                                        .addComponent(btnUpdate))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jLabel1)
+                                        .addComponent(jLabel2)
+                                        .addComponent(txtPatenteSalida, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                                        .addComponent(jFormattedTextField1))))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(120, 120, 120)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtMontoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(180, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -80,47 +104,88 @@ public class Vista_Salida extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtPatenteSalida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(4, 4, 4)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1)
+                .addComponent(btnUpdate)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addComponent(txtMontoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnCalcular)
                 .addGap(33, 33, 33)
-                .addComponent(jButton2)
+                .addComponent(btnMenu)
                 .addGap(31, 31, 31))
         );
 
-        jTextField1.getAccessibleContext().setAccessibleName("txtPante");
+        txtPatenteSalida.getAccessibleContext().setAccessibleName("txtPante");
         jFormattedTextField1.getAccessibleContext().setAccessibleName("jfHoraSalida");
-        jButton1.getAccessibleContext().setAccessibleName("btnCalcular");
-        jButton2.getAccessibleContext().setAccessibleName("btnMenu");
-        jTextField2.getAccessibleContext().setAccessibleName("txtCalcular");
+        btnCalcular.getAccessibleContext().setAccessibleName("btnCalcular");
+        btnMenu.getAccessibleContext().setAccessibleName("btnMenu");
+        txtMontoTotal.getAccessibleContext().setAccessibleName("txtCalcular");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuActionPerformed
         Menu abrir = new Menu();
         abrir.setVisible(true);
         this.setVisible(false);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnMenuActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    private void btnCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalcularActionPerformed
+        // TODO add your handling code here:
+//        int patente = Integer.parseInt(this.txtPatenteSalida.getText());
+        String patente2 = this.txtPatenteSalida.getText();
+        Controlador c = new Controlador();
+        String montoTotal = c.CalcularTotal(patente2);
+        this.txtMontoTotal.setText(montoTotal);
+//        this.txtMontoTotal.setText(montoTotal);
+//        this.txtMontoTotal.setText(c.BuscarPatente(patente));
+    }//GEN-LAST:event_btnCalcularActionPerformed
+
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        actualizarHoraSalida();
+    }//GEN-LAST:event_btnUpdateActionPerformed
+
+    public void actualizarHoraSalida() {
+        try {
+            Date d = new Date();
+            GregorianCalendar gc = new GregorianCalendar();
+            gc.setTime(d);
+            SimpleDateFormat ff=new SimpleDateFormat("hh:mm:ss");
+            String horaActual=ff.format(d);
+            
+            Controlador c = new Controlador();
+            String patente = this.txtPatenteSalida.getText();
+            Vehiculo v = new Vehiculo(horaActual, patente);
+            
+             c.IngresarHoraSalida(v);
+             
+                JOptionPane.showMessageDialog(this, "Vehiculo actualizado correctamente",
+                        "Mensajes", JOptionPane.INFORMATION_MESSAGE);
+                
+
+             
+        } catch(Exception e)
+        {
+            JOptionPane.showMessageDialog(this, "Problemas de conexión con la Base de Datos", 
+                        "Mensajes", JOptionPane.ERROR_MESSAGE);     
+        }
+
+    }
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnCalcular;
+    private javax.swing.JButton btnMenu;
+    private javax.swing.JButton btnUpdate;
     private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField txtMontoTotal;
+    private javax.swing.JTextField txtPatenteSalida;
     // End of variables declaration//GEN-END:variables
 }

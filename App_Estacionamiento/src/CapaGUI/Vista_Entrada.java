@@ -7,6 +7,10 @@ package CapaGUI;
 
 import CapaDTO.Vehiculo;
 import CapaNegocio.Controlador;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import javax.swing.JOptionPane;
 
 /**
@@ -15,11 +19,11 @@ import javax.swing.JOptionPane;
  */
 public class Vista_Entrada extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Vista_Entrada
-     */
+    Calendar hora = new GregorianCalendar();
+
     public Vista_Entrada() {
         initComponents();
+        jd_HoraEntrada.setCalendar(hora);
     }
 
     /**
@@ -31,32 +35,34 @@ public class Vista_Entrada extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnGuardar = new javax.swing.JButton();
+        btnMenu = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         txtPatente = new javax.swing.JTextField();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        jd_HoraEntrada = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("Guardar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnGuardarActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Menu");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnMenu.setText("Menu");
+        btnMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnMenuActionPerformed(evt);
             }
         });
 
         jLabel1.setText("Patente");
 
         jLabel2.setText("Hora entrada");
+
+        jd_HoraEntrada.setDateFormatString("HH:mm:ss");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -65,16 +71,16 @@ public class Vista_Entrada extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addComponent(jButton1)
-                            .addComponent(txtPatente, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-                            .addComponent(jFormattedTextField1)))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(147, 147, 147)
-                        .addComponent(jButton2)))
+                        .addComponent(btnMenu))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnGuardar, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jd_HoraEntrada, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                            .addComponent(txtPatente, javax.swing.GroupLayout.Alignment.LEADING))))
                 .addContainerGap(194, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -86,55 +92,65 @@ public class Vista_Entrada extends javax.swing.JFrame {
                 .addComponent(txtPatente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(4, 4, 4)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
+                .addGap(1, 1, 1)
+                .addComponent(jd_HoraEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnGuardar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 122, Short.MAX_VALUE)
-                .addComponent(jButton2)
+                .addComponent(btnMenu)
                 .addGap(31, 31, 31))
         );
 
-        jButton1.getAccessibleContext().setAccessibleName("btnGuardar");
-        jButton2.getAccessibleContext().setAccessibleName("btnMenu");
+        btnGuardar.getAccessibleContext().setAccessibleName("btnGuardar");
+        btnMenu.getAccessibleContext().setAccessibleName("btnMenu");
         txtPatente.getAccessibleContext().setAccessibleName("txtPatenteIngreso");
-        jFormattedTextField1.getAccessibleContext().setAccessibleName("jfHoraEntrada");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuActionPerformed
         Menu abrir = new Menu();
         abrir.setVisible(true);
         this.setVisible(false);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnMenuActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Controlador c = new Controlador();
-        String patente = this.txtPatente.getText();
-        Vehiculo v = new Vehiculo(0, patente, "15:15", "15:30", 29990);
-        if(c.AgregarVehiculo(v))
-            {
-                JOptionPane.showMessageDialog(this, "Paciente registrado correctamente", 
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        guardarVehiculo();
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    public void guardarVehiculo() {
+        try {
+            Date d = new Date();
+            GregorianCalendar gc = new GregorianCalendar();
+            gc.setTime(d);
+            SimpleDateFormat ff=new SimpleDateFormat("hh:mm:ss");
+            String horaActual=ff.format(d);
+            
+            Controlador c = new Controlador();
+            String patente = this.txtPatente.getText();
+            Vehiculo v = new Vehiculo(0, patente, horaActual, "00:00:00", 0);
+             c.AgregarVehiculo(v);
+             
+                JOptionPane.showMessageDialog(this, "Vehiculo registrado correctamente",
                         "Mensajes", JOptionPane.INFORMATION_MESSAGE);
                 
-            }
-        
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    
-    
+             
+        } catch(Exception e)
+        {
+            JOptionPane.showMessageDialog(this, "Problemas de conexión con la Base de Datos", 
+                        "Mensajes", JOptionPane.ERROR_MESSAGE);     
+        }
+
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
+    private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnMenu;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private com.toedter.calendar.JDateChooser jd_HoraEntrada;
     private javax.swing.JTextField txtPatente;
     // End of variables declaration//GEN-END:variables
 }

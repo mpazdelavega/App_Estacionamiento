@@ -16,7 +16,7 @@ import java.sql.SQLException;
 public class Conexion {
     //VARIABLES DE ENTORNO LOCAL
     Connection con;
-    private static String url = "jdbc:mysql://localhost:3306/webcompras";
+    private static String url = "jdbc:mysql://localhost:3306/bd_estacionamiento";
     private static String user = "root";
     private static String pass = "";
     public Connection getConnection(){
