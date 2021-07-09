@@ -78,6 +78,24 @@ public class Controlador {
         }
         return total;
     }
+    
+     public boolean EgresoVehiculo(Vehiculo v) {
+        try {
+            String sql = "UPDATE registro_vehiculos SET Monto_Total = ? WHERE Patente = ?";
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, v.getMonto_Total());
+            ps.setString(2, v.getPatente());
+            
+            if(ps.executeUpdate() > 0)
+            {
+                return true;
+            }
+        } catch (Exception e) {
+            return false;
+        }
+        return false;
+    }
 
 //    public String BuscarPatente(int id_patente) {
 //        String patente="";

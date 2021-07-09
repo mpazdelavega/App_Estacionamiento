@@ -33,6 +33,12 @@ public class Vehiculo {
         this.Patente = Patente;
         
     }
+
+    public Vehiculo(int Monto_Total, String Patente) {
+        this.Monto_Total = Monto_Total;
+        this.Patente = Patente;  
+    }
+    
     
     
 
