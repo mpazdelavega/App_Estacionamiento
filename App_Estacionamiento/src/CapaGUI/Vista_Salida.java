@@ -81,20 +81,20 @@ public class Vista_Salida extends javax.swing.JFrame {
 
         jTableVehiculos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Patente", "Hora_Entrada", "Hora_Salida", "Monto_Total"
+                "Id_Vehiculo", "Patente", "Hora_Entrada", "Hora_Salida", "Monto_Total"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -117,7 +117,7 @@ public class Vista_Salida extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(40, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtPatenteSalida, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
@@ -134,8 +134,8 @@ public class Vista_Salida extends javax.swing.JFrame {
                             .addComponent(btnCalcular, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(36, 36, 36)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 511, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 494, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(46, 46, 46))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -250,11 +250,12 @@ public class Vista_Salida extends javax.swing.JFrame {
             ArrayList<Vehiculo> vehiculo = c.listarVehiculos();
             for(Vehiculo v : vehiculo)
             {
-                Object fila[] = new Object[4];
-                fila[0] = v.getPatente();
-                fila[1] = v.getHora_Entrada();
-                fila[2] = v.getHora_Salida();
-                fila[3] = v.getMonto_Total();
+                Object fila[] = new Object[5];
+                fila[0] = v.getID_Vehiculo();
+                fila[1] = v.getPatente();
+                fila[2] = v.getHora_Entrada();
+                fila[3] = v.getHora_Salida();
+                fila[4] = v.getMonto_Total();
                 modelo.addRow(fila);
             }
             this.jTableVehiculos.setModel(modelo);

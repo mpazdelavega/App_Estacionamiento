@@ -109,7 +109,7 @@ public class Controlador {
             rs = ps.executeQuery();
             while(rs.next())
             {
-                vehiculo.add(new Vehiculo(rs.getString(2),rs.getString(3),rs.getString(4), rs.getInt(5)));
+                vehiculo.add(new Vehiculo(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4), rs.getInt(5)));
                 
             }
         }
@@ -122,4 +122,23 @@ public class Controlador {
         return vehiculo;
     }
      
+     public boolean delete(Object key) {
+        try
+        {
+            String sql = "DELETE FROM registro_vehiculos WHERE Id_Vehiculo = ?";
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, (String) key);
+            if(ps.executeUpdate() > 0 )
+            {
+                return true;
+            }
+        }
+        catch(SQLException ex)
+        {
+            return false;
+        }
+
+        return false;
+    }
 }
