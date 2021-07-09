@@ -39,6 +39,20 @@ public class Vehiculo {
         this.Patente = Patente;  
     }
     
+    public Vehiculo(String Patente,int Monto_Total) {
+        this.Patente = Patente;  
+        this.Monto_Total = Monto_Total;
+        
+    }
+
+    public Vehiculo(String Patente, String Hora_Entrada, String Hora_Salida, int Monto_Total) {
+        this.Patente = Patente;
+        this.Hora_Entrada = Hora_Entrada;
+        this.Hora_Salida = Hora_Salida;
+        this.Monto_Total = Monto_Total;
+    }
+    
+    
     
     
 

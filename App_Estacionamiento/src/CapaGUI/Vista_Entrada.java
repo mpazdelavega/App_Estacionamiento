@@ -81,7 +81,7 @@ public class Vista_Entrada extends javax.swing.JFrame {
                             .addComponent(btnGuardar, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jd_HoraEntrada, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
                             .addComponent(txtPatente, javax.swing.GroupLayout.Alignment.LEADING))))
-                .addContainerGap(194, Short.MAX_VALUE))
+                .addContainerGap(557, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -96,7 +96,7 @@ public class Vista_Entrada extends javax.swing.JFrame {
                 .addComponent(jd_HoraEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnGuardar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 122, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 213, Short.MAX_VALUE)
                 .addComponent(btnMenu)
                 .addGap(31, 31, 31))
         );
