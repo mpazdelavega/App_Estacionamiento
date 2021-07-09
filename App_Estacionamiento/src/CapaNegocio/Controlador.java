@@ -122,7 +122,7 @@ public class Controlador {
         return vehiculo;
     }
      
-     public boolean delete(Object key) {
+     public boolean eliminarVehiculo(Object key) {
         try
         {
             String sql = "DELETE FROM registro_vehiculos WHERE Id_Vehiculo = ?";

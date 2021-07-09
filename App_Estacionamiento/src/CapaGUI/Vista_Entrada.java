@@ -7,11 +7,14 @@ package CapaGUI;
 
 import CapaDTO.Vehiculo;
 import CapaNegocio.Controlador;
+import java.awt.HeadlessException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -23,7 +26,6 @@ public class Vista_Entrada extends javax.swing.JFrame {
 
     public Vista_Entrada() {
         initComponents();
-        jd_HoraEntrada.setCalendar(hora);
     }
 
     /**
@@ -38,11 +40,17 @@ public class Vista_Entrada extends javax.swing.JFrame {
         btnGuardar = new javax.swing.JButton();
         btnMenu = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         txtPatente = new javax.swing.JTextField();
-        jd_HoraEntrada = new com.toedter.calendar.JDateChooser();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTableVehiculos = new javax.swing.JTable();
+        btnEliminar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                formComponentShown(evt);
+            }
+        });
 
         btnGuardar.setText("Guardar");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -60,45 +68,87 @@ public class Vista_Entrada extends javax.swing.JFrame {
 
         jLabel1.setText("Patente");
 
-        jLabel2.setText("Hora entrada");
+        jTableVehiculos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Codigo", "Patente", "Hora_Entrada", "Hora_Salida", "Monto_Total"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
 
-        jd_HoraEntrada.setDateFormatString("HH:mm:ss");
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTableVehiculos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableVehiculosMouseClicked(evt);
+            }
+        });
+        jTableVehiculos.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                jTableVehiculosComponentShown(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTableVehiculos);
+
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(147, 147, 147)
-                        .addComponent(btnMenu))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnGuardar, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jd_HoraEntrada, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-                            .addComponent(txtPatente, javax.swing.GroupLayout.Alignment.LEADING))))
-                .addContainerGap(557, Short.MAX_VALUE))
+                    .addComponent(jLabel1)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(btnMenu, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnGuardar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnEliminar)
+                    .addComponent(txtPatente, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 494, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(83, 83, 83))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtPatente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(4, 4, 4)
-                .addComponent(jLabel2)
-                .addGap(1, 1, 1)
-                .addComponent(jd_HoraEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnGuardar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 213, Short.MAX_VALUE)
-                .addComponent(btnMenu)
-                .addGap(31, 31, 31))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtPatente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnGuardar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnEliminar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnMenu)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(60, 60, 60))
         );
 
         btnGuardar.getAccessibleContext().setAccessibleName("btnGuardar");
@@ -118,12 +168,31 @@ public class Vista_Entrada extends javax.swing.JFrame {
         guardarVehiculo();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
+    private void jTableVehiculosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableVehiculosMouseClicked
+//        int seleccion = this.jTableVehiculos.rowAtPoint(evt.getPoint());
+//        int fila = this.jTableVehiculos.getSelectedRow();
+//
+//        this.txtId_Vehiculo.setText(String.valueOf(this.jTableVehiculos.getValueAt(seleccion, 0)));
+    }//GEN-LAST:event_jTableVehiculosMouseClicked
+
+    private void jTableVehiculosComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jTableVehiculosComponentShown
+
+    }//GEN-LAST:event_jTableVehiculosComponentShown
+
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+        cargarListaVehiculos();
+    }//GEN-LAST:event_formComponentShown
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        eliminarVehiculo();
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
     public void guardarVehiculo() {
         try {
             Date d = new Date();
             GregorianCalendar gc = new GregorianCalendar();
             gc.setTime(d);
-            SimpleDateFormat ff=new SimpleDateFormat("hh:mm:ss");
+            SimpleDateFormat ff=new SimpleDateFormat("kk:mm:ss");
             String horaActual=ff.format(d);
             
             Controlador c = new Controlador();
@@ -133,7 +202,7 @@ public class Vista_Entrada extends javax.swing.JFrame {
              
                 JOptionPane.showMessageDialog(this, "Vehiculo registrado correctamente",
                         "Mensajes", JOptionPane.INFORMATION_MESSAGE);
-                
+                cargarListaVehiculos();
 
              
         } catch(Exception e)
@@ -143,14 +212,75 @@ public class Vista_Entrada extends javax.swing.JFrame {
         }
 
     }
+    
+    public void cargarListaVehiculos(){
+        try
+        {
+            Controlador c = new Controlador();
+            DefaultTableModel modelo = (DefaultTableModel) this.jTableVehiculos.getModel();
+            modelo.setRowCount(0);
+            ArrayList<Vehiculo> vehiculo = c.listarVehiculos();
+            for(Vehiculo v : vehiculo)
+            {
+                Object fila[] = new Object[5];
+                fila[0] = v.getID_Vehiculo();
+                fila[1] = v.getPatente();
+                fila[2] = v.getHora_Entrada();
+                fila[3] = v.getHora_Salida();
+                fila[4] = v.getMonto_Total();
+                modelo.addRow(fila);
+            }
+            this.jTableVehiculos.setModel(modelo);
+        }
+        catch(Exception e)
+        {
+            JOptionPane.showMessageDialog(this, "Problemas de conexión con la Base de Datos", 
+                        "Mensajes", JOptionPane.ERROR_MESSAGE);     
+        }
+    }
+    
+    public void eliminarVehiculo(){
+        try 
+        {
+            Controlador c = new Controlador();
+            int filaSeleccionada = this.jTableVehiculos.getSelectedRow();
+            //JOptionPane.showMessageDialog(this, filaSeleccionada);
+            if(filaSeleccionada > -1)
+            {
+                int respuesta = JOptionPane.showConfirmDialog(this, "Está seguro que deseas eliminar a esta Patente.", 
+                    "Mensajes", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+                if(respuesta == JOptionPane.YES_OPTION)
+                {
+                    String id = this.jTableVehiculos.getModel().getValueAt(filaSeleccionada, 0).toString();
+                    if(c.eliminarVehiculo(id))
+                    {
+                        JOptionPane.showMessageDialog(this, "Vehiculo eliminado.","Mensajes",JOptionPane.INFORMATION_MESSAGE);
+                        cargarListaVehiculos();
+                    }
+                }
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(this, "Para eliminar un registro, debe seleccionar una fila","Mensajes",JOptionPane.WARNING_MESSAGE);
+            }
+        } 
+        catch (HeadlessException e) 
+        {
+            JOptionPane.showMessageDialog(this, "Se ha producido un error.",
+                    "Mensaje", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnMenu;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private com.toedter.calendar.JDateChooser jd_HoraEntrada;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTableVehiculos;
     private javax.swing.JTextField txtPatente;
     // End of variables declaration//GEN-END:variables
 }
