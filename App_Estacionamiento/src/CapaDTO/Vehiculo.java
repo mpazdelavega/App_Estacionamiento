@@ -5,6 +5,8 @@
  */
 package CapaDTO;
 
+import java.sql.Date;
+
 /**
  *
  * @author manue
@@ -16,8 +18,18 @@ public class Vehiculo {
     private String Hora_Entrada;
     private String Hora_Salida;
     private int Monto_Total;
+    private String Fecha;
     
     public Vehiculo() {
+    }
+
+    public Vehiculo(int ID_Vehiculo, String Patente, String Hora_Entrada, String Hora_Salida, int Monto_Total, String Fecha) {
+        this.ID_Vehiculo = ID_Vehiculo;
+        this.Patente = Patente;
+        this.Hora_Entrada = Hora_Entrada;
+        this.Hora_Salida = Hora_Salida;
+        this.Monto_Total = Monto_Total;
+        this.Fecha = Fecha;
     }
 
     public Vehiculo(int ID_Vehiculo, String Patente, String Hora_Entrada, String Hora_Salida, int Monto_Total) {
@@ -28,15 +40,23 @@ public class Vehiculo {
         this.Monto_Total = Monto_Total;
     }
 
+    public String getFecha() {
+        return Fecha;
+    }
+
+    public void setFecha(String Fecha) {
+        this.Fecha = Fecha;
+    }
+
     public Vehiculo(String Hora_Salida, String Patente) {
         this.Hora_Salida = Hora_Salida;
         this.Patente = Patente;
         
     }
 
-    public Vehiculo(int Monto_Total, String Patente) {
+    public Vehiculo(int Monto_Total, int ID_Vehiculo) {
         this.Monto_Total = Monto_Total;
-        this.Patente = Patente;  
+        this.ID_Vehiculo = ID_Vehiculo;  
     }
     
     public Vehiculo(String Patente,int Monto_Total) {

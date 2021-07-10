@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -22,10 +23,11 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Vista_Entrada extends javax.swing.JFrame {
 
-    Calendar hora = new GregorianCalendar();
+    Calendar fechaActual = new GregorianCalendar();
 
     public Vista_Entrada() {
         initComponents();
+        this.setIconImage(new ImageIcon(getClass().getResource("/Imagenes/car.png")).getImage());
     }
 
     /**
@@ -41,17 +43,22 @@ public class Vista_Entrada extends javax.swing.JFrame {
         btnMenu = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         txtPatente = new javax.swing.JTextField();
+        btnEliminar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableVehiculos = new javax.swing.JTable();
-        btnEliminar = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Entrada Vehículos");
+        setLocation(new java.awt.Point(150, 150));
+        setResizable(false);
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
                 formComponentShown(evt);
             }
         });
 
+        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/save.png"))); // NOI18N
         btnGuardar.setText("Guardar");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -59,6 +66,7 @@ public class Vista_Entrada extends javax.swing.JFrame {
             }
         });
 
+        btnMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/home.png"))); // NOI18N
         btnMenu.setText("Menu");
         btnMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -68,6 +76,14 @@ public class Vista_Entrada extends javax.swing.JFrame {
 
         jLabel1.setText("Patente");
 
+        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/delete.png"))); // NOI18N
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+
         jTableVehiculos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
@@ -76,7 +92,7 @@ public class Vista_Entrada extends javax.swing.JFrame {
                 {null, null, null, null, null}
             },
             new String [] {
-                "Codigo", "Patente", "Hora_Entrada", "Hora_Salida", "Monto_Total"
+                "Codigo", "Patente", "Hora Entrada", "Hora Salida", "Monto Total"
             }
         ) {
             Class[] types = new Class [] {
@@ -94,6 +110,7 @@ public class Vista_Entrada extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTableVehiculos.getTableHeader().setReorderingAllowed(false);
         jTableVehiculos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTableVehiculosMouseClicked(evt);
@@ -105,39 +122,45 @@ public class Vista_Entrada extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(jTableVehiculos);
+        if (jTableVehiculos.getColumnModel().getColumnCount() > 0) {
+            jTableVehiculos.getColumnModel().getColumn(0).setPreferredWidth(20);
+            jTableVehiculos.getColumnModel().getColumn(4).setPreferredWidth(30);
+        }
 
-        btnEliminar.setText("Eliminar");
-        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarActionPerformed(evt);
-            }
-        });
+        jLabel4.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel4.setText("*Seleccione una fila de la tabla para porder Eliminar Registros*");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(btnMenu, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnGuardar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(btnEliminar)
-                    .addComponent(txtPatente, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 494, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(83, 83, 83))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(89, 89, 89))
+                            .addComponent(txtPatente, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(20, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtPatente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -145,10 +168,12 @@ public class Vista_Entrada extends javax.swing.JFrame {
                         .addComponent(btnGuardar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnEliminar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnMenu)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(60, 60, 60))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnMenu))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel4)
+                .addGap(23, 23, 23))
         );
 
         btnGuardar.getAccessibleContext().setAccessibleName("btnGuardar");
@@ -168,24 +193,26 @@ public class Vista_Entrada extends javax.swing.JFrame {
         guardarVehiculo();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
-    private void jTableVehiculosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableVehiculosMouseClicked
-//        int seleccion = this.jTableVehiculos.rowAtPoint(evt.getPoint());
-//        int fila = this.jTableVehiculos.getSelectedRow();
-//
-//        this.txtId_Vehiculo.setText(String.valueOf(this.jTableVehiculos.getValueAt(seleccion, 0)));
-    }//GEN-LAST:event_jTableVehiculosMouseClicked
-
-    private void jTableVehiculosComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jTableVehiculosComponentShown
-
-    }//GEN-LAST:event_jTableVehiculosComponentShown
-
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
         cargarListaVehiculos();
+        this.txtPatente.requestFocus();
     }//GEN-LAST:event_formComponentShown
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         eliminarVehiculo();
     }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void jTableVehiculosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableVehiculosMouseClicked
+        int seleccion = this.jTableVehiculos.rowAtPoint(evt.getPoint());
+        int fila = this.jTableVehiculos.getSelectedRow();
+
+//        this.txtId_Vehiculo.setText(String.valueOf(this.jTableVehiculos.getValueAt(seleccion, 0)));
+//        this.txtPatenteSalida.setText(String.valueOf(this.jTableVehiculos.getValueAt(seleccion, 1)));
+    }//GEN-LAST:event_jTableVehiculosMouseClicked
+
+    private void jTableVehiculosComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jTableVehiculosComponentShown
+
+    }//GEN-LAST:event_jTableVehiculosComponentShown
 
     public void guardarVehiculo() {
         try {
@@ -195,9 +222,14 @@ public class Vista_Entrada extends javax.swing.JFrame {
             SimpleDateFormat ff=new SimpleDateFormat("kk:mm:ss");
             String horaActual=ff.format(d);
             
+            Date da = new Date();
+            SimpleDateFormat fff=new SimpleDateFormat("YYYY-MM-dd kk:mm:ss");
+            String fechaActual=fff.format(da);
+            System.out.println(fechaActual);
+            
             Controlador c = new Controlador();
             String patente = this.txtPatente.getText();
-            Vehiculo v = new Vehiculo(0, patente, horaActual, "00:00:00", 0);
+            Vehiculo v = new Vehiculo(0, patente, horaActual, "00:00:00", 0, fechaActual);
              c.AgregarVehiculo(v);
              
                 JOptionPane.showMessageDialog(this, "Vehiculo registrado correctamente",
@@ -279,6 +311,7 @@ public class Vista_Entrada extends javax.swing.JFrame {
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnMenu;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableVehiculos;
     private javax.swing.JTextField txtPatente;

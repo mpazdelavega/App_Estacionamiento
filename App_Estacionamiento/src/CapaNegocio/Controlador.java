@@ -26,7 +26,7 @@ public class Controlador {
     ResultSet rs;
 
     public boolean AgregarVehiculo(Vehiculo v) {
-        String sql = "Insert into registro_vehiculos values(?,?,?,?,?)";
+        String sql = "Insert into registro_vehiculos values(?,?,?,?,?,?)";
         try {
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
@@ -35,6 +35,7 @@ public class Controlador {
             ps.setString(3, v.getHora_Entrada());
             ps.setString(4, v.getHora_Salida());
             ps.setInt(5, v.getMonto_Total());
+            ps.setString(6, v.getFecha());
             ps.executeUpdate();
         } catch (Exception e) {
         }
@@ -43,17 +44,18 @@ public class Controlador {
 
     public boolean IngresarHoraSalida(Vehiculo v) {
         try {
-            String sql = "UPDATE registro_vehiculos SET Hora_Salida = ? WHERE Patente = ? and Hora_Entrada = (Select max(Hora_Entrada) from registro_vehiculos)";
+            String sql = "UPDATE registro_vehiculos SET Hora_Salida = ? WHERE ID_Vehiculo = ?";
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
             ps.setString(1, v.getHora_Salida());
-            ps.setString(2, v.getPatente());
+            ps.setInt(2, v.getID_Vehiculo());
             
             if(ps.executeUpdate() > 0)
             {
                 return true;
             }
         } catch (Exception e) {
+//            System.out.println(e);
             return false;
         }
         return false;
@@ -63,7 +65,7 @@ public class Controlador {
 //        String patenteSalida = "";
         String total = "";
         ResultSet rs = null;
-        String sql = "SELECT (FLOOR(TIMESTAMPDIFF(minute, Hora_Entrada, Hora_Salida)/10)*100)+300 as Total FROM registro_vehiculos WHERE Patente = ? and Hora_Entrada = (Select max(Hora_Entrada) from registro_vehiculos)";
+        String sql = "SELECT (FLOOR(TIMESTAMPDIFF(minute, Hora_Entrada, Hora_Salida)/10)*100)+300 as Total FROM registro_vehiculos WHERE ID_Vehiculo = ?";
         try {
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
@@ -83,11 +85,11 @@ public class Controlador {
     
      public boolean EgresoVehiculo(Vehiculo v) {
         try {
-            String sql = "UPDATE registro_vehiculos SET Monto_Total = ? WHERE Patente = ? and Hora_Entrada = (Select max(Hora_Entrada) from registro_vehiculos)";
+            String sql = "UPDATE registro_vehiculos SET Monto_Total = ? WHERE ID_Vehiculo = ?";
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
             ps.setInt(1, v.getMonto_Total());
-            ps.setString(2, v.getPatente());
+            ps.setInt(2, v.getID_Vehiculo());
             
             if(ps.executeUpdate() > 0)
             {
@@ -110,7 +112,6 @@ public class Controlador {
             while(rs.next())
             {
                 vehiculo.add(new Vehiculo(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4), rs.getInt(5)));
-                
             }
         }
         catch(SQLException e)
