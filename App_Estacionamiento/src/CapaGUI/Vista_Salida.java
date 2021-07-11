@@ -7,6 +7,7 @@ package CapaGUI;
 
 import CapaDTO.Vehiculo;
 import CapaNegocio.Controlador;
+import java.awt.Color;
 import java.awt.HeadlessException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -52,6 +53,8 @@ public class Vista_Salida extends javax.swing.JFrame {
         txtId_Vehiculo = new javax.swing.JTextField();
         btnEliminar = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
+        txtFiltro = new javax.swing.JTextField();
+        btnClean = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Salida Vehículos");
@@ -156,36 +159,74 @@ public class Vista_Salida extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(102, 102, 102));
         jLabel4.setText("*Seleccione una fila de la tabla para porder Calcular MontoTotal, Finalizar Salida o Eliminar Registro*");
 
+        txtFiltro.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        txtFiltro.setForeground(new java.awt.Color(204, 204, 204));
+        txtFiltro.setText("Escribe aqui para buscar Patente");
+        txtFiltro.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtFiltroFocusGained(evt);
+            }
+        });
+        txtFiltro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtFiltroKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtFiltroKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtFiltroKeyTyped(evt);
+            }
+        });
+
+        btnClean.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/clean.png"))); // NOI18N
+        btnClean.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCleanActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtPatenteSalida)
-                    .addComponent(btnMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtId_Vehiculo)
-                    .addComponent(txtMontoTotal)
-                    .addComponent(btnFinalizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnCalcular, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnClean))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtPatenteSalida, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnMenu, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtId_Vehiculo, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtMontoTotal, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnFinalizar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnCalcular, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel1)
+                                    .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel1)
-                            .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel4)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(24, 24, 24))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(23, 23, 23)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(16, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtFiltro)
+                    .addComponent(btnClean, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
@@ -210,7 +251,7 @@ public class Vista_Salida extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addGap(31, 31, 31))
         );
 
         txtPatenteSalida.getAccessibleContext().setAccessibleName("txtPante");
@@ -244,6 +285,7 @@ public class Vista_Salida extends javax.swing.JFrame {
     private void btnFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarActionPerformed
         EgresarVehiculo();
         cargarListaVehiculos();
+        limpiar();
     }//GEN-LAST:event_btnFinalizarActionPerformed
 
     private void jTableVehiculosComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jTableVehiculosComponentShown
@@ -260,11 +302,52 @@ public class Vista_Salida extends javax.swing.JFrame {
         
         this.txtId_Vehiculo.setText(String.valueOf(this.jTableVehiculos.getValueAt(seleccion, 0)));
         this.txtPatenteSalida.setText(String.valueOf(this.jTableVehiculos.getValueAt(seleccion, 1)));
+        this.txtMontoTotal.setText(String.valueOf(this.jTableVehiculos.getValueAt(seleccion, 4)));
     }//GEN-LAST:event_jTableVehiculosMouseClicked
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         eliminarVehiculo();
     }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void txtFiltroKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFiltroKeyTyped
+        buscarPatente();
+    }//GEN-LAST:event_txtFiltroKeyTyped
+
+    private void btnCleanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCleanActionPerformed
+        limpiarFiltro();
+        cargarListaVehiculos();
+        this.txtFiltro.requestFocus();
+        if(this.txtFiltro.getText().isEmpty()==true)
+        {
+            this.txtFiltro.setText("Escribe aqui para buscar Patente");
+            this.txtFiltro.setCaretPosition(0);
+            this.txtFiltro.setForeground(new java.awt.Color(204,204,204));
+        }
+    }//GEN-LAST:event_btnCleanActionPerformed
+
+    private void txtFiltroKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFiltroKeyPressed
+        if(txtFiltro.getForeground()!=Color.BLACK)
+        {
+            if(this.txtFiltro.getText().equals("Escribe aqui para buscar Patente"))
+            {
+                this.txtFiltro.setText("");
+            }
+        }
+        this.txtFiltro.setForeground(Color.BLACK);
+    }//GEN-LAST:event_txtFiltroKeyPressed
+
+    private void txtFiltroFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtFiltroFocusGained
+        this.txtFiltro.setCaretPosition(0);
+    }//GEN-LAST:event_txtFiltroFocusGained
+
+    private void txtFiltroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFiltroKeyReleased
+        if(this.txtFiltro.getText().isEmpty()==true)
+        {
+            this.txtFiltro.setText("Escribe aqui para buscar Patente");
+            this.txtFiltro.setCaretPosition(0);
+            this.txtFiltro.setForeground(new java.awt.Color(204,204,204));
+        }
+    }//GEN-LAST:event_txtFiltroKeyReleased
 
     public void actualizarHoraSalida() {
         try {
@@ -352,6 +435,7 @@ public class Vista_Salida extends javax.swing.JFrame {
                     {
                         JOptionPane.showMessageDialog(this, "Vehiculo eliminado.","Mensajes",JOptionPane.INFORMATION_MESSAGE);
                         cargarListaVehiculos();
+                        limpiar();
                     }
                 }
             }
@@ -366,12 +450,56 @@ public class Vista_Salida extends javax.swing.JFrame {
                     "Mensaje", JOptionPane.ERROR_MESSAGE);
         }
         
+    }
+    
+    public void limpiar()
+    {
+        this.txtId_Vehiculo.setText(null);
+        this.txtMontoTotal.setText(null);
+        this.txtPatenteSalida.setText(null);
+    }
+    
+    public void limpiarFiltro()
+    {
+        this.txtFiltro.setText(null);
+    }
+    public void buscarPatente(){
         
+        try
+        {
+        Controlador c = new Controlador();
+        DefaultTableModel modelo = (DefaultTableModel) this.jTableVehiculos.getModel();
+        modelo.setRowCount(0);
+        ArrayList<Vehiculo> vehiculo = c.listarVehiculos();
+        
+        String filtro = this.txtFiltro.getText();
+        for(Vehiculo v : vehiculo)
+        {
+            Object fila[] = new Object[8];
+            fila[0] = v.getID_Vehiculo();
+            fila[1] = v.getPatente();
+            fila[2] = v.getHora_Entrada();
+            fila[3] = v.getHora_Salida();
+            fila[4] = v.getMonto_Total();
+                
+            if(v.getPatente().toLowerCase().contains(filtro.toLowerCase()))
+            {
+                modelo.addRow(fila);
+            }
+        }
+        this.jTableVehiculos.setModel(modelo);
+        }
+        catch(Exception e)
+        {
+            JOptionPane.showMessageDialog(this, "Problemas de conexión con la Base de Datos", 
+                        "Mensajes", JOptionPane.ERROR_MESSAGE);     
+        }
     }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCalcular;
+    private javax.swing.JButton btnClean;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnFinalizar;
     private javax.swing.JButton btnMenu;
@@ -381,6 +509,7 @@ public class Vista_Salida extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableVehiculos;
+    private javax.swing.JTextField txtFiltro;
     private javax.swing.JTextField txtId_Vehiculo;
     private javax.swing.JTextField txtMontoTotal;
     private javax.swing.JTextField txtPatenteSalida;
