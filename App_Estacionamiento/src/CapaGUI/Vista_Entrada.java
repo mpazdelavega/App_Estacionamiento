@@ -76,7 +76,7 @@ public class Vista_Entrada extends javax.swing.JFrame {
 
         jLabel1.setText("Patente");
 
-        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/delete.png"))); // NOI18N
+        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/basura.png"))); // NOI18N
         btnEliminar.setText("Eliminar");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -128,7 +128,7 @@ public class Vista_Entrada extends javax.swing.JFrame {
         }
 
         jLabel4.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel4.setText("*Seleccione una fila de la tabla para porder Eliminar Registros*");
+        jLabel4.setText("*Seleccione una fila de la tabla para poder ELIMINAR registros*");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -140,8 +140,8 @@ public class Vista_Entrada extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -223,7 +223,7 @@ public class Vista_Entrada extends javax.swing.JFrame {
             String horaActual=ff.format(d);
             
             Date da = new Date();
-            SimpleDateFormat fff=new SimpleDateFormat("YYYY-MM-dd kk:mm:ss");
+            SimpleDateFormat fff=new SimpleDateFormat("YYYY-MM-dd");
             String fechaActual=fff.format(da);
             System.out.println(fechaActual);
             

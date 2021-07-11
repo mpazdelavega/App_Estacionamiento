@@ -33,24 +33,29 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="txtMontoTotal" alignment="0" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="txtPatenteSalida" alignment="0" max="32767" attributes="0"/>
-                  <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnEliminar" alignment="0" max="32767" attributes="0"/>
                   <Component id="btnMenu" max="32767" attributes="0"/>
-                  <Component id="btnFinalizar" pref="160" max="32767" attributes="0"/>
-                  <Component id="btnCalcular" alignment="0" max="32767" attributes="0"/>
                   <Component id="txtId_Vehiculo" alignment="0" max="32767" attributes="0"/>
+                  <Component id="txtMontoTotal" alignment="0" max="32767" attributes="0"/>
+                  <Component id="btnFinalizar" alignment="0" max="32767" attributes="0"/>
+                  <Component id="btnCalcular" alignment="0" max="32767" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnEliminar" min="-2" pref="160" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                   <Component id="jScrollPane1" min="-2" pref="600" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="24" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -106,7 +111,10 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnCalcular">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Calcular monto total"/>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/Imagenes/calcular.png"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Calcular"/>
       </Properties>
       <AccessibilityProperties>
         <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="btnCalcular"/>
@@ -117,6 +125,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnMenu">
       <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/Imagenes/home.png"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Menu"/>
       </Properties>
       <AccessibilityProperties>
@@ -137,7 +148,10 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnFinalizar">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Finalizar salida veh&#xed;culo"/>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/Imagenes/finalizar.png"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Finalizar"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnFinalizarActionPerformed"/>
@@ -219,7 +233,10 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnEliminar">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Eliminar registro"/>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/Imagenes/basura.png"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Eliminar"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEliminarActionPerformed"/>
