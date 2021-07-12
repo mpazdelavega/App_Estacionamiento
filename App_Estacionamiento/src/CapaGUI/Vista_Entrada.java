@@ -76,6 +76,12 @@ public class Vista_Entrada extends javax.swing.JFrame {
 
         jLabel1.setText("Patente");
 
+        txtPatente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPatenteKeyTyped(evt);
+            }
+        });
+
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/basura.png"))); // NOI18N
         btnEliminar.setText("Eliminar");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
@@ -192,6 +198,7 @@ public class Vista_Entrada extends javax.swing.JFrame {
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         validarPatente();
         limpiarPatente();
+        this.txtPatente.requestFocus();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
@@ -215,6 +222,13 @@ public class Vista_Entrada extends javax.swing.JFrame {
     private void jTableVehiculosComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jTableVehiculosComponentShown
 
     }//GEN-LAST:event_jTableVehiculosComponentShown
+
+    private void txtPatenteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPatenteKeyTyped
+        if(this.txtPatente.getText().length() == 10)
+        {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtPatenteKeyTyped
 
     public void guardarVehiculo() {
         try {
@@ -269,8 +283,10 @@ public class Vista_Entrada extends javax.swing.JFrame {
 
     public void validarPatente() {
         try {
-            if (this.txtPatente.getText().isEmpty()) {
+            if (this.txtPatente.getText().isEmpty())
+            {
                 JOptionPane.showMessageDialog(this, "Debe ingresar una patente", "Advertencia", JOptionPane.WARNING_MESSAGE);
+                this.txtPatente.requestFocus();
             } else {
                 guardarVehiculo();
             }

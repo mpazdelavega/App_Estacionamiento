@@ -271,12 +271,8 @@ public class Vista_Salida extends javax.swing.JFrame {
     private void btnCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalcularActionPerformed
         
         ValidarCalculo();
-        ValidarEgreso();
+//        ValidarEgreso();
     }//GEN-LAST:event_btnCalcularActionPerformed
-
-    private void btnFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarActionPerformed
-        ValidarEgreso();
-    }//GEN-LAST:event_btnFinalizarActionPerformed
 
     private void jTableVehiculosComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jTableVehiculosComponentShown
 
@@ -333,6 +329,10 @@ public class Vista_Salida extends javax.swing.JFrame {
             this.txtFiltro.setForeground(new java.awt.Color(204, 204, 204));
         }
     }//GEN-LAST:event_txtFiltroKeyReleased
+
+    private void btnFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarActionPerformed
+        ValidarEgreso();
+    }//GEN-LAST:event_btnFinalizarActionPerformed
 
     public void actualizarHoraSalida() {
         try {
@@ -450,11 +450,12 @@ public class Vista_Salida extends javax.swing.JFrame {
         try {
             Controlador c = new Controlador();
             int filaSeleccionada = this.jTableVehiculos.getSelectedRow();
-            if (filaSeleccionada > -1) {
+            if (this.txtMontoTotal.getText().equals("0") || this.txtMontoTotal.getText().equals("")) {
+                JOptionPane.showMessageDialog(this, "Para finalizar el proceso, primero debe calcular el total", "Mensajes", JOptionPane.WARNING_MESSAGE);
+            } else {
                 EgresarVehiculo();
                 cargarListaVehiculos();
-            } else {
-                JOptionPane.showMessageDialog(this, "Para egresar un vehículo, debe seleccionar una fila", "Mensajes", JOptionPane.WARNING_MESSAGE);
+                limpiar();
             }
         } catch (HeadlessException e) {
             JOptionPane.showMessageDialog(this, "Se ha producido un error.",
