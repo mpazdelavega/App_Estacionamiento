@@ -269,23 +269,13 @@ public class Vista_Salida extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMenuActionPerformed
 
     private void btnCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalcularActionPerformed
-        // TODO add your handling code here:
-//        int patente = Integer.parseInt(this.txtPatenteSalida.getText());
-        actualizarHoraSalida();
-        String patente2 = this.txtPatenteSalida.getText();
-        int idVehiculo = Integer.parseInt(this.txtId_Vehiculo.getText());
-        Controlador c = new Controlador();
-        String montoTotal = c.CalcularTotal(String.valueOf(idVehiculo));
-        this.txtMontoTotal.setText(montoTotal);
-        cargarListaVehiculos();
-//        this.txtMontoTotal.setText(montoTotal);
-//        this.txtMontoTotal.setText(c.BuscarPatente(patente));
+        
+        ValidarCalculo();
+        ValidarEgreso();
     }//GEN-LAST:event_btnCalcularActionPerformed
 
     private void btnFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarActionPerformed
-        EgresarVehiculo();
-        cargarListaVehiculos();
-        limpiar();
+        ValidarEgreso();
     }//GEN-LAST:event_btnFinalizarActionPerformed
 
     private void jTableVehiculosComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jTableVehiculosComponentShown
@@ -299,7 +289,6 @@ public class Vista_Salida extends javax.swing.JFrame {
     private void jTableVehiculosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableVehiculosMouseClicked
         int seleccion = this.jTableVehiculos.rowAtPoint(evt.getPoint());
         int fila = this.jTableVehiculos.getSelectedRow();
-        
         this.txtId_Vehiculo.setText(String.valueOf(this.jTableVehiculos.getValueAt(seleccion, 0)));
         this.txtPatenteSalida.setText(String.valueOf(this.jTableVehiculos.getValueAt(seleccion, 1)));
         this.txtMontoTotal.setText(String.valueOf(this.jTableVehiculos.getValueAt(seleccion, 4)));
@@ -317,19 +306,16 @@ public class Vista_Salida extends javax.swing.JFrame {
         limpiarFiltro();
         cargarListaVehiculos();
         this.txtFiltro.requestFocus();
-        if(this.txtFiltro.getText().isEmpty()==true)
-        {
+        if (this.txtFiltro.getText().isEmpty() == true) {
             this.txtFiltro.setText("Escribe aqui para buscar Patente");
             this.txtFiltro.setCaretPosition(0);
-            this.txtFiltro.setForeground(new java.awt.Color(204,204,204));
+            this.txtFiltro.setForeground(new java.awt.Color(204, 204, 204));
         }
     }//GEN-LAST:event_btnCleanActionPerformed
 
     private void txtFiltroKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFiltroKeyPressed
-        if(txtFiltro.getForeground()!=Color.BLACK)
-        {
-            if(this.txtFiltro.getText().equals("Escribe aqui para buscar Patente"))
-            {
+        if (txtFiltro.getForeground() != Color.BLACK) {
+            if (this.txtFiltro.getText().equals("Escribe aqui para buscar Patente")) {
                 this.txtFiltro.setText("");
             }
         }
@@ -341,11 +327,10 @@ public class Vista_Salida extends javax.swing.JFrame {
     }//GEN-LAST:event_txtFiltroFocusGained
 
     private void txtFiltroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFiltroKeyReleased
-        if(this.txtFiltro.getText().isEmpty()==true)
-        {
+        if (this.txtFiltro.getText().isEmpty() == true) {
             this.txtFiltro.setText("Escribe aqui para buscar Patente");
             this.txtFiltro.setCaretPosition(0);
-            this.txtFiltro.setForeground(new java.awt.Color(204,204,204));
+            this.txtFiltro.setForeground(new java.awt.Color(204, 204, 204));
         }
     }//GEN-LAST:event_txtFiltroKeyReleased
 
@@ -359,11 +344,10 @@ public class Vista_Salida extends javax.swing.JFrame {
 
             Controlador c = new Controlador();
             int idVehiculo = Integer.parseInt(this.txtId_Vehiculo.getText());
-            
+
 //            Vehiculo v = new Vehiculo(horaActual, idVehiculo);
             Vehiculo v = new Vehiculo(idVehiculo, horaActual, horaActual, horaActual, 0);
             c.IngresarHoraSalida(v);
-
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Problemas de conexión con la Base de Datos",
@@ -391,16 +375,14 @@ public class Vista_Salida extends javax.swing.JFrame {
         }
 
     }
-    
-    public void cargarListaVehiculos(){
-        try
-        {
+
+    public void cargarListaVehiculos() {
+        try {
             Controlador c = new Controlador();
             DefaultTableModel modelo = (DefaultTableModel) this.jTableVehiculos.getModel();
             modelo.setRowCount(0);
             ArrayList<Vehiculo> vehiculo = c.listarVehiculos();
-            for(Vehiculo v : vehiculo)
-            {
+            for (Vehiculo v : vehiculo) {
                 Object fila[] = new Object[5];
                 fila[0] = v.getID_Vehiculo();
                 fila[1] = v.getPatente();
@@ -410,89 +392,112 @@ public class Vista_Salida extends javax.swing.JFrame {
                 modelo.addRow(fila);
             }
             this.jTableVehiculos.setModel(modelo);
-        }
-        catch(Exception e)
-        {
-            JOptionPane.showMessageDialog(this, "Problemas de conexión con la Base de Datos", 
-                        "Mensajes", JOptionPane.ERROR_MESSAGE);     
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Problemas de conexión con la Base de Datos",
+                    "Mensajes", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
-    public void eliminarVehiculo(){
-        try 
-        {
+
+    public void eliminarVehiculo() {
+        try {
             Controlador c = new Controlador();
             int filaSeleccionada = this.jTableVehiculos.getSelectedRow();
             //JOptionPane.showMessageDialog(this, filaSeleccionada);
-            if(filaSeleccionada > -1)
-            {
-                int respuesta = JOptionPane.showConfirmDialog(this, "Está seguro que deseas eliminar a esta Patente.", 
-                    "Mensajes", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
-                if(respuesta == JOptionPane.YES_OPTION)
-                {
+            if (filaSeleccionada > -1) {
+                int respuesta = JOptionPane.showConfirmDialog(this, "Está seguro que deseas eliminar a esta Patente.",
+                        "Mensajes", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if (respuesta == JOptionPane.YES_OPTION) {
                     String id = this.jTableVehiculos.getModel().getValueAt(filaSeleccionada, 0).toString();
-                    if(c.eliminarVehiculo(id))
-                    {
-                        JOptionPane.showMessageDialog(this, "Vehiculo eliminado.","Mensajes",JOptionPane.INFORMATION_MESSAGE);
+                    if (c.eliminarVehiculo(id)) {
+                        JOptionPane.showMessageDialog(this, "Vehiculo eliminado.", "Mensajes", JOptionPane.INFORMATION_MESSAGE);
                         cargarListaVehiculos();
                         limpiar();
                     }
                 }
+            } else {
+                JOptionPane.showMessageDialog(this, "Para eliminar un registro, debe seleccionar una fila", "Mensajes", JOptionPane.WARNING_MESSAGE);
             }
-            else
-            {
-                JOptionPane.showMessageDialog(this, "Para eliminar un registro, debe seleccionar una fila","Mensajes",JOptionPane.WARNING_MESSAGE);
-            }
-        } 
-        catch (HeadlessException e) 
-        {
+        } catch (HeadlessException e) {
             JOptionPane.showMessageDialog(this, "Se ha producido un error.",
                     "Mensaje", JOptionPane.ERROR_MESSAGE);
         }
-        
+
+    }
+
+    public void ValidarCalculo() {
+        try {
+            
+            Controlador c = new Controlador();
+            int filaSeleccionada = this.jTableVehiculos.getSelectedRow();
+            
+            if (filaSeleccionada > -1) {
+                actualizarHoraSalida();
+                int idVehiculo = Integer.parseInt(this.txtId_Vehiculo.getText());
+                String montoTotal = c.CalcularTotal(String.valueOf(idVehiculo));
+                this.txtMontoTotal.setText(montoTotal);
+                
+            } else {
+                JOptionPane.showMessageDialog(this, "Para calcular un registro, debe seleccionar una fila", "Mensajes", JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (HeadlessException e) {
+            JOptionPane.showMessageDialog(this, "Se ha producido un error.",
+                    "Mensaje", JOptionPane.ERROR_MESSAGE);
+        }
+
+    }
+
+    public void ValidarEgreso() {
+        try {
+            Controlador c = new Controlador();
+            int filaSeleccionada = this.jTableVehiculos.getSelectedRow();
+            if (filaSeleccionada > -1) {
+                EgresarVehiculo();
+                cargarListaVehiculos();
+            } else {
+                JOptionPane.showMessageDialog(this, "Para egresar un vehículo, debe seleccionar una fila", "Mensajes", JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (HeadlessException e) {
+            JOptionPane.showMessageDialog(this, "Se ha producido un error.",
+                    "Mensaje", JOptionPane.ERROR_MESSAGE);
+        }
+
     }
     
-    public void limpiar()
-    {
+    public void limpiar() {
         this.txtId_Vehiculo.setText(null);
         this.txtMontoTotal.setText(null);
         this.txtPatenteSalida.setText(null);
     }
-    
-    public void limpiarFiltro()
-    {
+
+    public void limpiarFiltro() {
         this.txtFiltro.setText(null);
     }
-    public void buscarPatente(){
-        
-        try
-        {
-        Controlador c = new Controlador();
-        DefaultTableModel modelo = (DefaultTableModel) this.jTableVehiculos.getModel();
-        modelo.setRowCount(0);
-        ArrayList<Vehiculo> vehiculo = c.listarVehiculos();
-        
-        String filtro = this.txtFiltro.getText();
-        for(Vehiculo v : vehiculo)
-        {
-            Object fila[] = new Object[8];
-            fila[0] = v.getID_Vehiculo();
-            fila[1] = v.getPatente();
-            fila[2] = v.getHora_Entrada();
-            fila[3] = v.getHora_Salida();
-            fila[4] = v.getMonto_Total();
-                
-            if(v.getPatente().toLowerCase().contains(filtro.toLowerCase()))
-            {
-                modelo.addRow(fila);
+
+    public void buscarPatente() {
+
+        try {
+            Controlador c = new Controlador();
+            DefaultTableModel modelo = (DefaultTableModel) this.jTableVehiculos.getModel();
+            modelo.setRowCount(0);
+            ArrayList<Vehiculo> vehiculo = c.listarVehiculos();
+
+            String filtro = this.txtFiltro.getText();
+            for (Vehiculo v : vehiculo) {
+                Object fila[] = new Object[8];
+                fila[0] = v.getID_Vehiculo();
+                fila[1] = v.getPatente();
+                fila[2] = v.getHora_Entrada();
+                fila[3] = v.getHora_Salida();
+                fila[4] = v.getMonto_Total();
+
+                if (v.getPatente().toLowerCase().contains(filtro.toLowerCase())) {
+                    modelo.addRow(fila);
+                }
             }
-        }
-        this.jTableVehiculos.setModel(modelo);
-        }
-        catch(Exception e)
-        {
-            JOptionPane.showMessageDialog(this, "Problemas de conexión con la Base de Datos", 
-                        "Mensajes", JOptionPane.ERROR_MESSAGE);     
+            this.jTableVehiculos.setModel(modelo);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Problemas de conexión con la Base de Datos",
+                    "Mensajes", JOptionPane.ERROR_MESSAGE);
         }
     }
 

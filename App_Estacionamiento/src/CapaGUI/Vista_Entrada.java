@@ -190,7 +190,8 @@ public class Vista_Entrada extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMenuActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        guardarVehiculo();
+        validarPatente();
+        limpiarPatente();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
@@ -200,6 +201,7 @@ public class Vista_Entrada extends javax.swing.JFrame {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         eliminarVehiculo();
+
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void jTableVehiculosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableVehiculosMouseClicked
@@ -219,41 +221,37 @@ public class Vista_Entrada extends javax.swing.JFrame {
             Date d = new Date();
             GregorianCalendar gc = new GregorianCalendar();
             gc.setTime(d);
-            SimpleDateFormat ff=new SimpleDateFormat("kk:mm:ss");
-            String horaActual=ff.format(d);
-            
+            SimpleDateFormat ff = new SimpleDateFormat("kk:mm:ss");
+            String horaActual = ff.format(d);
+
             Date da = new Date();
-            SimpleDateFormat fff=new SimpleDateFormat("YYYY-MM-dd");
-            String fechaActual=fff.format(da);
+            SimpleDateFormat fff = new SimpleDateFormat("YYYY-MM-dd");
+            String fechaActual = fff.format(da);
             System.out.println(fechaActual);
-            
+
             Controlador c = new Controlador();
             String patente = this.txtPatente.getText();
             Vehiculo v = new Vehiculo(0, patente, horaActual, "00:00:00", 0, fechaActual);
-             c.AgregarVehiculo(v);
-             
-                JOptionPane.showMessageDialog(this, "Vehiculo registrado correctamente",
-                        "Mensajes", JOptionPane.INFORMATION_MESSAGE);
-                cargarListaVehiculos();
+            c.AgregarVehiculo(v);
 
-             
-        } catch(Exception e)
-        {
-            JOptionPane.showMessageDialog(this, "Problemas de conexión con la Base de Datos", 
-                        "Mensajes", JOptionPane.ERROR_MESSAGE);     
+            JOptionPane.showMessageDialog(this, "Vehiculo registrado correctamente",
+                    "Mensajes", JOptionPane.INFORMATION_MESSAGE);
+            cargarListaVehiculos();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Problemas de conexión con la Base de Datos",
+                    "Mensajes", JOptionPane.ERROR_MESSAGE);
         }
 
     }
-    
-    public void cargarListaVehiculos(){
-        try
-        {
+
+    public void cargarListaVehiculos() {
+        try {
             Controlador c = new Controlador();
             DefaultTableModel modelo = (DefaultTableModel) this.jTableVehiculos.getModel();
             modelo.setRowCount(0);
             ArrayList<Vehiculo> vehiculo = c.listarVehiculos();
-            for(Vehiculo v : vehiculo)
-            {
+            for (Vehiculo v : vehiculo) {
                 Object fila[] = new Object[5];
                 fila[0] = v.getID_Vehiculo();
                 fila[1] = v.getPatente();
@@ -263,46 +261,53 @@ public class Vista_Entrada extends javax.swing.JFrame {
                 modelo.addRow(fila);
             }
             this.jTableVehiculos.setModel(modelo);
-        }
-        catch(Exception e)
-        {
-            JOptionPane.showMessageDialog(this, "Problemas de conexión con la Base de Datos", 
-                        "Mensajes", JOptionPane.ERROR_MESSAGE);     
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Problemas de conexión con la Base de Datos",
+                    "Mensajes", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
-    public void eliminarVehiculo(){
-        try 
-        {
+
+    public void validarPatente() {
+        try {
+            if (this.txtPatente.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Debe ingresar una patente", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            } else {
+                guardarVehiculo();
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Problemas de conexión con la Base de Datos",
+                    "Mensajes", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public void eliminarVehiculo() {
+        try {
             Controlador c = new Controlador();
             int filaSeleccionada = this.jTableVehiculos.getSelectedRow();
             //JOptionPane.showMessageDialog(this, filaSeleccionada);
-            if(filaSeleccionada > -1)
-            {
-                int respuesta = JOptionPane.showConfirmDialog(this, "Está seguro que deseas eliminar a esta Patente.", 
-                    "Mensajes", JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
-                if(respuesta == JOptionPane.YES_OPTION)
-                {
+            if (filaSeleccionada > -1) {
+                int respuesta = JOptionPane.showConfirmDialog(this, "Está seguro que deseas eliminar a esta Patente.",
+                        "Mensajes", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if (respuesta == JOptionPane.YES_OPTION) {
                     String id = this.jTableVehiculos.getModel().getValueAt(filaSeleccionada, 0).toString();
-                    if(c.eliminarVehiculo(id))
-                    {
-                        JOptionPane.showMessageDialog(this, "Vehiculo eliminado.","Mensajes",JOptionPane.INFORMATION_MESSAGE);
+                    if (c.eliminarVehiculo(id)) {
+                        JOptionPane.showMessageDialog(this, "Vehiculo eliminado.", "Advertencia", JOptionPane.WARNING_MESSAGE);
                         cargarListaVehiculos();
                     }
                 }
+            } else {
+                JOptionPane.showMessageDialog(this, "Para eliminar un registro, debe seleccionar una fila", "Mensajes", JOptionPane.WARNING_MESSAGE);
             }
-            else
-            {
-                JOptionPane.showMessageDialog(this, "Para eliminar un registro, debe seleccionar una fila","Mensajes",JOptionPane.WARNING_MESSAGE);
-            }
-        } 
-        catch (HeadlessException e) 
-        {
+        } catch (HeadlessException e) {
             JOptionPane.showMessageDialog(this, "Se ha producido un error.",
                     "Mensaje", JOptionPane.ERROR_MESSAGE);
         }
-        
-        
+
+    }
+    
+    public void limpiarPatente(){
+        this.txtPatente.setText(null);
     }
 
 
