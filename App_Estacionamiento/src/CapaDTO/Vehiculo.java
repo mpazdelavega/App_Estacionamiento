@@ -19,17 +19,28 @@ public class Vehiculo {
     private String Hora_Salida;
     private int Monto_Total;
     private String Fecha;
+    private int Estado;
     
     public Vehiculo() {
     }
 
-    public Vehiculo(int ID_Vehiculo, String Patente, String Hora_Entrada, String Hora_Salida, int Monto_Total, String Fecha) {
+    public Vehiculo(int ID_Vehiculo, String Patente, String Hora_Entrada, String Hora_Salida, int Monto_Total, String Fecha, int Estado) {
         this.ID_Vehiculo = ID_Vehiculo;
         this.Patente = Patente;
         this.Hora_Entrada = Hora_Entrada;
         this.Hora_Salida = Hora_Salida;
         this.Monto_Total = Monto_Total;
         this.Fecha = Fecha;
+        this.Estado = Estado;
+    }
+    
+    public Vehiculo(int ID_Vehiculo, String Patente, String Hora_Entrada, String Hora_Salida, int Monto_Total, int Estado) {
+        this.ID_Vehiculo = ID_Vehiculo;
+        this.Patente = Patente;
+        this.Hora_Entrada = Hora_Entrada;
+        this.Hora_Salida = Hora_Salida;
+        this.Monto_Total = Monto_Total;
+        this.Estado = Estado;
     }
 
     public Vehiculo(int ID_Vehiculo, String Patente, String Hora_Entrada, String Hora_Salida, int Monto_Total) {
@@ -40,6 +51,16 @@ public class Vehiculo {
         this.Monto_Total = Monto_Total;
     }
 
+    public int getEstado() {
+        return Estado;
+    }
+
+    public void setEstado(int Estado) {
+        this.Estado = Estado;
+    }
+
+    
+    
     public String getFecha() {
         return Fecha;
     }

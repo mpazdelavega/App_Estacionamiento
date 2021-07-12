@@ -245,7 +245,7 @@ public class Vista_Entrada extends javax.swing.JFrame {
 
             Controlador c = new Controlador();
             String patente = this.txtPatente.getText();
-            Vehiculo v = new Vehiculo(0, patente, horaActual, "00:00:00", 0, fechaActual);
+            Vehiculo v = new Vehiculo(0, patente, horaActual, "00:00:00", 0, fechaActual, 0);
             c.AgregarVehiculo(v);
 
             JOptionPane.showMessageDialog(this, "Vehiculo registrado correctamente",

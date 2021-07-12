@@ -102,20 +102,20 @@ public class Vista_Salida extends javax.swing.JFrame {
 
         jTableVehiculos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Codigo", "Patente", "Hora Entrada", "Hora Salida", "Monto Total"
+                "Codigo", "Patente", "Hora Entrada", "Hora Salida", "Monto Total", "Pagado"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Boolean.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -141,6 +141,7 @@ public class Vista_Salida extends javax.swing.JFrame {
         if (jTableVehiculos.getColumnModel().getColumnCount() > 0) {
             jTableVehiculos.getColumnModel().getColumn(0).setPreferredWidth(20);
             jTableVehiculos.getColumnModel().getColumn(4).setPreferredWidth(30);
+            jTableVehiculos.getColumnModel().getColumn(5).setPreferredWidth(2);
         }
 
         jLabel2.setText("Codigo Vehículo");
@@ -383,17 +384,25 @@ public class Vista_Salida extends javax.swing.JFrame {
             modelo.setRowCount(0);
             ArrayList<Vehiculo> vehiculo = c.listarVehiculos();
             for (Vehiculo v : vehiculo) {
-                Object fila[] = new Object[5];
+                Object fila[] = new Object[6];
                 fila[0] = v.getID_Vehiculo();
                 fila[1] = v.getPatente();
                 fila[2] = v.getHora_Entrada();
                 fila[3] = v.getHora_Salida();
                 fila[4] = v.getMonto_Total();
+                if(v.getEstado() == 1)
+                {
+                    fila[5] = true;
+                }
+                else
+                {
+                    fila[5] = false;
+                }
                 modelo.addRow(fila);
             }
             this.jTableVehiculos.setModel(modelo);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Problemas de conexión con la Base de Datos",
+            JOptionPane.showMessageDialog(this, "Problemas de conexión con la Base de Datos " + e,
                     "Mensajes", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -416,6 +425,7 @@ public class Vista_Salida extends javax.swing.JFrame {
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "Para eliminar un registro, debe seleccionar una fila", "Mensajes", JOptionPane.WARNING_MESSAGE);
+                this.txtFiltro.requestFocus();
             }
         } catch (HeadlessException e) {
             JOptionPane.showMessageDialog(this, "Se ha producido un error.",
@@ -438,6 +448,7 @@ public class Vista_Salida extends javax.swing.JFrame {
                 
             } else {
                 JOptionPane.showMessageDialog(this, "Para calcular un registro, debe seleccionar una fila", "Mensajes", JOptionPane.WARNING_MESSAGE);
+                this.txtFiltro.requestFocus();
             }
         } catch (HeadlessException e) {
             JOptionPane.showMessageDialog(this, "Se ha producido un error.",
@@ -452,6 +463,7 @@ public class Vista_Salida extends javax.swing.JFrame {
             int filaSeleccionada = this.jTableVehiculos.getSelectedRow();
             if (this.txtMontoTotal.getText().equals("0") || this.txtMontoTotal.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Para finalizar el proceso, primero debe calcular el total", "Mensajes", JOptionPane.WARNING_MESSAGE);
+                this.txtFiltro.requestFocus();
             } else {
                 EgresarVehiculo();
                 cargarListaVehiculos();

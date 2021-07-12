@@ -27,7 +27,7 @@ public class Controlador {
     ResultSet rs;
 
     public boolean AgregarVehiculo(Vehiculo v) {
-        String sql = "Insert into registro_vehiculos values(?,?,?,?,?,?)";
+        String sql = "Insert into registro_vehiculos values(?,?,?,?,?,?,?)";
         try {
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
@@ -37,6 +37,7 @@ public class Controlador {
             ps.setString(4, v.getHora_Salida());
             ps.setInt(5, v.getMonto_Total());
             ps.setString(6, v.getFecha());
+            ps.setInt(7, v.getEstado());
             ps.executeUpdate();
         } catch (Exception e) {
         }
@@ -86,11 +87,12 @@ public class Controlador {
     
      public boolean EgresoVehiculo(Vehiculo v) {
         try {
-            String sql = "UPDATE registro_vehiculos SET Monto_Total = ? WHERE ID_Vehiculo = ?";
+            String sql = "UPDATE registro_vehiculos SET Monto_Total = ?, Estado = ? WHERE ID_Vehiculo = ?";
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
             ps.setInt(1, v.getMonto_Total());
-            ps.setInt(2, v.getID_Vehiculo());
+            ps.setInt(2, 1);
+            ps.setInt(3, v.getID_Vehiculo());
             
             if(ps.executeUpdate() > 0)
             {
@@ -112,7 +114,8 @@ public class Controlador {
             rs = ps.executeQuery();
             while(rs.next())
             {
-                vehiculo.add(new Vehiculo(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4), rs.getInt(5)));
+//                vehiculo.add(new Vehiculo(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4), rs.getInt(5)));
+                vehiculo.add(new Vehiculo(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getInt(7)));
             }
         }
         catch(SQLException e)
