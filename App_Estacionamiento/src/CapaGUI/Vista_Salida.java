@@ -88,6 +88,7 @@ public class Vista_Salida extends javax.swing.JFrame {
         });
 
         txtMontoTotal.setEditable(false);
+        txtMontoTotal.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         txtMontoTotal.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         btnFinalizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/finalizar.png"))); // NOI18N
@@ -297,6 +298,10 @@ public class Vista_Salida extends javax.swing.JFrame {
 
     private void txtFiltroKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFiltroKeyTyped
         buscarPatente();
+        if(this.txtFiltro.getText().length() == 12)
+        {
+            evt.consume();
+        }
     }//GEN-LAST:event_txtFiltroKeyTyped
 
     private void btnCleanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCleanActionPerformed
@@ -367,7 +372,7 @@ public class Vista_Salida extends javax.swing.JFrame {
 
             c.EgresoVehiculo(v);
 
-            JOptionPane.showMessageDialog(this, "Vehiculo egresado correctamente",
+            JOptionPane.showMessageDialog(this, "Proceso finalizado correctamente.",
                     "Mensajes", JOptionPane.INFORMATION_MESSAGE);
 
         } catch (Exception e) {
@@ -418,13 +423,18 @@ public class Vista_Salida extends javax.swing.JFrame {
                 if (respuesta == JOptionPane.YES_OPTION) {
                     String id = this.jTableVehiculos.getModel().getValueAt(filaSeleccionada, 0).toString();
                     if (c.eliminarVehiculo(id)) {
-                        JOptionPane.showMessageDialog(this, "Vehiculo eliminado.", "Mensajes", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(this, "Registro eliminado.", "Mensajes", JOptionPane.INFORMATION_MESSAGE);
                         cargarListaVehiculos();
                         limpiar();
+                        this.txtFiltro.requestFocus();
                     }
                 }
+                else
+                {
+                    this.txtFiltro.requestFocus();
+                }
             } else {
-                JOptionPane.showMessageDialog(this, "Para eliminar un registro, debe seleccionar una fila", "Mensajes", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Para eliminar un registro, debe seleccionar una fila.", "Mensajes", JOptionPane.WARNING_MESSAGE);
                 this.txtFiltro.requestFocus();
             }
         } catch (HeadlessException e) {
@@ -434,21 +444,45 @@ public class Vista_Salida extends javax.swing.JFrame {
 
     }
 
+//    public void ValidarCalculo() {
+//        try {
+//            
+//            Controlador c = new Controlador();
+//            int filaSeleccionada = this.jTableVehiculos.getSelectedRow();
+//            
+//            if (filaSeleccionada > -1) {
+//                actualizarHoraSalida();
+//                int idVehiculo = Integer.parseInt(this.txtId_Vehiculo.getText());
+//                String montoTotal = c.CalcularTotal(String.valueOf(idVehiculo));
+//                this.txtMontoTotal.setText(montoTotal);
+//                
+//            } else {
+//                JOptionPane.showMessageDialog(this, "Para calcular un registro, debe seleccionar una fila.", "Mensajes", JOptionPane.WARNING_MESSAGE);
+//                this.txtFiltro.requestFocus();
+//            }
+//        } catch (HeadlessException e) {
+//            JOptionPane.showMessageDialog(this, "Se ha producido un error.",
+//                    "Mensaje", JOptionPane.ERROR_MESSAGE);
+//        }
+//
+//    }
+    
     public void ValidarCalculo() {
         try {
             
             Controlador c = new Controlador();
             int filaSeleccionada = this.jTableVehiculos.getSelectedRow();
             
-            if (filaSeleccionada > -1) {
+            if (this.txtId_Vehiculo.getText().equals("")) {
+                JOptionPane.showMessageDialog(this, "Para calcular un registro, debe seleccionar una fila.", "Mensajes", JOptionPane.WARNING_MESSAGE);
+                this.txtFiltro.requestFocus();
+                
+            } else {
                 actualizarHoraSalida();
                 int idVehiculo = Integer.parseInt(this.txtId_Vehiculo.getText());
                 String montoTotal = c.CalcularTotal(String.valueOf(idVehiculo));
                 this.txtMontoTotal.setText(montoTotal);
                 
-            } else {
-                JOptionPane.showMessageDialog(this, "Para calcular un registro, debe seleccionar una fila", "Mensajes", JOptionPane.WARNING_MESSAGE);
-                this.txtFiltro.requestFocus();
             }
         } catch (HeadlessException e) {
             JOptionPane.showMessageDialog(this, "Se ha producido un error.",
@@ -461,13 +495,18 @@ public class Vista_Salida extends javax.swing.JFrame {
         try {
             Controlador c = new Controlador();
             int filaSeleccionada = this.jTableVehiculos.getSelectedRow();
-            if (this.txtMontoTotal.getText().equals("0") || this.txtMontoTotal.getText().equals("")) {
-                JOptionPane.showMessageDialog(this, "Para finalizar el proceso, primero debe calcular el total", "Mensajes", JOptionPane.WARNING_MESSAGE);
+            if (this.txtId_Vehiculo.getText().equals("")) {
+                JOptionPane.showMessageDialog(this, "Para finalizar el proceso, primero se debe seleccionar una fila.", "Mensajes", JOptionPane.WARNING_MESSAGE);
                 this.txtFiltro.requestFocus();
-            } else {
+            }
+            else if(this.txtMontoTotal.getText().equals("0") || this.txtMontoTotal.getText().equals("")){
+                JOptionPane.showMessageDialog(this, "Para finalizar el proceso, primero se debe calcular el total.", "Mensajes", JOptionPane.WARNING_MESSAGE);
+            }
+            else {
                 EgresarVehiculo();
                 cargarListaVehiculos();
                 limpiar();
+                
             }
         } catch (HeadlessException e) {
             JOptionPane.showMessageDialog(this, "Se ha producido un error.",

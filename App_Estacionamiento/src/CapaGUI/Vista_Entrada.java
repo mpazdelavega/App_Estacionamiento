@@ -224,7 +224,7 @@ public class Vista_Entrada extends javax.swing.JFrame {
     }//GEN-LAST:event_jTableVehiculosComponentShown
 
     private void txtPatenteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPatenteKeyTyped
-        if(this.txtPatente.getText().length() == 10)
+        if(this.txtPatente.getText().length() == 12)
         {
             evt.consume();
         }
@@ -248,7 +248,7 @@ public class Vista_Entrada extends javax.swing.JFrame {
             Vehiculo v = new Vehiculo(0, patente, horaActual, "00:00:00", 0, fechaActual, 0);
             c.AgregarVehiculo(v);
 
-            JOptionPane.showMessageDialog(this, "Vehiculo registrado correctamente",
+            JOptionPane.showMessageDialog(this, "Patente registrada correctamente.",
                     "Mensajes", JOptionPane.INFORMATION_MESSAGE);
             cargarListaVehiculos();
 
@@ -285,7 +285,7 @@ public class Vista_Entrada extends javax.swing.JFrame {
         try {
             if (this.txtPatente.getText().isEmpty())
             {
-                JOptionPane.showMessageDialog(this, "Debe ingresar una patente", "Advertencia", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Debe ingresar una patente.", "Advertencia", JOptionPane.WARNING_MESSAGE);
                 this.txtPatente.requestFocus();
             } else {
                 guardarVehiculo();
@@ -308,12 +308,18 @@ public class Vista_Entrada extends javax.swing.JFrame {
                 if (respuesta == JOptionPane.YES_OPTION) {
                     String id = this.jTableVehiculos.getModel().getValueAt(filaSeleccionada, 0).toString();
                     if (c.eliminarVehiculo(id)) {
-                        JOptionPane.showMessageDialog(this, "Vehiculo eliminado.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+                        JOptionPane.showMessageDialog(this, "Registro eliminado.", "Mensajes", JOptionPane.INFORMATION_MESSAGE);
                         cargarListaVehiculos();
+                        this.txtPatente.requestFocus();
                     }
+                }
+                else
+                {
+                    this.txtPatente.requestFocus();
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "Para eliminar un registro, debe seleccionar una fila", "Mensajes", JOptionPane.WARNING_MESSAGE);
+                this.txtPatente.requestFocus();
             }
         } catch (HeadlessException e) {
             JOptionPane.showMessageDialog(this, "Se ha producido un error.",
